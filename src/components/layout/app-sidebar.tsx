@@ -9,6 +9,7 @@ import {
   Search,
   ShieldCheck,
   Factory,
+  Network,
   ChevronsUpDown,
   LogOut,
 } from "lucide-react";
@@ -65,6 +66,11 @@ const navItems = [
     label: "생산 관리",
     icon: Factory,
     href: "/production",
+  },
+  {
+    label: "온톨로지",
+    icon: Network,
+    href: "/ontology",
   },
 ];
 

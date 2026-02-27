@@ -1,14 +1,120 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-header";
-import { RegulationChat } from "@/components/regulations/regulation-chat";
+import { SearchBar } from "@/components/regulations/search-bar";
+import { SearchFilterSidebar } from "@/components/regulations/search-filter-sidebar";
+import { AiSummaryCard } from "@/components/regulations/ai-summary-card";
+import { SearchResults } from "@/components/regulations/search-results";
+import { FileUploadZone } from "@/components/regulations/file-upload-zone";
+import { ExcelPreviewModal } from "@/components/regulations/excel-preview-modal";
+import { useSearch } from "@/hooks/use-search";
+import { useDemoContext } from "@/context/demo-context";
 
 export default function RegulationsPage() {
+  const demo = useDemoContext();
+  const { query, setQuery, state, summary, results, allResults, countryFilters, toggleCountryFilter, search, reset } =
+    useSearch();
+  const [excelModalOpen, setExcelModalOpen] = useState(false);
+
+  const searchRef = useRef(search);
+  const toggleRef = useRef(toggleCountryFilter);
+  const queryRef = useRef(query);
+  useEffect(() => { searchRef.current = search; }, [search]);
+  useEffect(() => { toggleRef.current = toggleCountryFilter; }, [toggleCountryFilter]);
+  useEffect(() => { queryRef.current = query; }, [query]);
+
+  // Sync typewriter text → search input during demo (search or all scenario)
+  useEffect(() => {
+    if (demo.isPlaying && demo.typewriterText) {
+      setQuery(demo.typewriterText);
+    }
+  }, [demo.typewriterText, demo.isPlaying, setQuery]);
+
+  // Demo event handlers
+  useEffect(() => {
+    const handlers: Record<string, () => void> = {
+      "demo:search": () => searchRef.current(queryRef.current),
+      "demo:filter:KR": () => toggleRef.current("KR"),
+      "demo:filter:EU": () => toggleRef.current("EU"),
+      "demo:show-excel-modal": () => setExcelModalOpen(true),
+      "demo:hide-excel-modal": () => setExcelModalOpen(false),
+      "demo:simulate-file": () =>
+        window.dispatchEvent(
+          new CustomEvent("demo-simulate-file", {
+            detail: { name: "성분분석서_2026Q1.xlsx" },
+          })
+        ),
+      "demo:trigger-analyze": () =>
+        window.dispatchEvent(new CustomEvent("demo-trigger-analyze")),
+    };
+
+    const entries = Object.entries(handlers);
+    entries.forEach(([event, fn]) => window.addEventListener(event, fn));
+    return () => entries.forEach(([event, fn]) => window.removeEventListener(event, fn));
+  }, []);
+
   return (
     <div className="space-y-6">
       <PageHeader
-        title="규제 검색"
-        description="AI 기반 화장품 원료 규제 정보를 검색하세요"
+        title="규제 검색엔진"
+        description="화장품 원료 성분의 국가별 규제 현황을 AI로 검색하세요"
       />
-      <RegulationChat />
+
+      <SearchBar
+        value={query}
+        onChange={setQuery}
+        onSearch={search}
+        onReset={reset}
+        compact={state !== "idle"}
+        inputId="demo-search-input"
+        buttonId="demo-search-button"
+      />
+
+      {state === "loading" && (
+        <div className="flex items-center justify-center gap-3 py-16 text-muted-foreground">
+          <Loader2 className="size-5 animate-spin" />
+          <span className="text-sm">AI 규제 데이터베이스 검색 중...</span>
+        </div>
+      )}
+
+      {state === "results" && (
+        <div className="flex gap-6">
+          <div className="w-44 flex-shrink-0">
+            <SearchFilterSidebar
+              countryFilters={countryFilters}
+              onToggleCountry={toggleCountryFilter}
+            />
+          </div>
+          <div id="demo-results-area" className="flex-1 space-y-4 min-w-0">
+            <AiSummaryCard summary={summary} />
+            <SearchResults results={results} totalCount={allResults.length} />
+          </div>
+        </div>
+      )}
+
+      <div className="border-t border-border pt-6">
+        <div className="flex items-center justify-between mb-1">
+          <h2 className="text-sm font-semibold">일괄 분석</h2>
+          <button
+            onClick={() => setExcelModalOpen(true)}
+            className="text-xs text-primary hover:underline"
+          >
+            파일 형식 안내
+          </button>
+        </div>
+        <p className="text-xs text-muted-foreground mb-4">
+          성분분석서(Excel)를 업로드하면 포함된 모든 성분의 규제 현황을 일괄 검토합니다
+        </p>
+        <FileUploadZone
+          zoneId="demo-upload-zone"
+          buttonId="demo-analyze-button"
+          bulkResultsId="demo-bulk-results"
+        />
+      </div>
+
+      <ExcelPreviewModal open={excelModalOpen} onClose={() => setExcelModalOpen(false)} />
     </div>
   );
 }

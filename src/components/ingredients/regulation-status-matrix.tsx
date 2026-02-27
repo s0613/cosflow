@@ -18,7 +18,7 @@ const countries: { code: Country; label: string }[] = [
   { code: "CN", label: "중국" },
   { code: "JP", label: "일본" },
   { code: "EU", label: "유럽연합" },
-  { code: "VN", label: "베트남" },
+  { code: "VN", label: "아세안" },
 ];
 
 interface RegulationStatusMatrixProps {

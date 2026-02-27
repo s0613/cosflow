@@ -195,9 +195,9 @@ export const certifications: CertificationRecord[] = [
       { name: "CFS (자유판매증명서)", status: "미시작" },
       { name: "성분 분석표", status: "미시작" },
       { name: "GMP 인증서", status: "완료" },
-      { name: "베트남어 라벨", status: "미시작" },
+      { name: "아세안 표기 라벨", status: "미시작" },
     ],
-    notes: "한국 인증 후 베트남 수출용 서류 준비 예정.",
+    notes: "한국 인증 후 아세안 수출용 서류 준비 예정.",
   },
   {
     id: "CERT-013",
@@ -262,9 +262,9 @@ export const certifications: CertificationRecord[] = [
       { name: "CFS (자유판매증명서)", status: "완료" },
       { name: "성분 분석표", status: "완료" },
       { name: "GMP 인증서", status: "완료" },
-      { name: "베트남어 라벨", status: "완료" },
+      { name: "아세안 표기 라벨", status: "완료" },
     ],
-    notes: "베트남 수출 인증 완료.",
+    notes: "아세안 수출 인증 완료.",
   },
   {
     id: "CERT-017",

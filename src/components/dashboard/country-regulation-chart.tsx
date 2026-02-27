@@ -8,7 +8,7 @@ const data = [
   { name: "중국", value: 85 },
   { name: "일본", value: 92 },
   { name: "EU", value: 88 },
-  { name: "베트남", value: 72 },
+  { name: "아세안", value: 72 },
 ];
 
 const COLORS = ["#3b82f6", "#ef4444", "#f97316", "#8b5cf6", "#22c55e"];

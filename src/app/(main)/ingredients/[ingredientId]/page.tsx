@@ -1,10 +1,12 @@
 "use client";
 
-import { use } from "react";
+import { use, useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, FileText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RegulationStatusMatrix } from "@/components/ingredients/regulation-status-matrix";
+import { IngredientRegulationGraph } from "@/components/ingredients/ingredient-regulation-graph";
+import { ReportGenerateDialog } from "@/components/reports/report-generate-dialog";
 import { ingredients } from "@/data/ingredients";
 
 interface IngredientDetailPageProps {
@@ -16,6 +18,13 @@ export default function IngredientDetailPage({
 }: IngredientDetailPageProps) {
   const { ingredientId } = use(params);
   const ingredient = ingredients.find((i) => i.id === ingredientId);
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setReportDialogOpen(true);
+    window.addEventListener("demo:open-report-dialog", handler);
+    return () => window.removeEventListener("demo:open-report-dialog", handler);
+  }, []);
 
   if (!ingredient) {
     return (
@@ -27,13 +36,23 @@ export default function IngredientDetailPage({
 
   return (
     <div className="space-y-6">
-      <Link
-        href="/ingredients"
-        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <ArrowLeft className="size-4" />
-        성분 목록
-      </Link>
+      <div className="flex items-center justify-between">
+        <Link
+          href="/ingredients"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="size-4" />
+          성분 목록
+        </Link>
+        <button
+          id="demo-report-btn"
+          onClick={() => setReportDialogOpen(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+        >
+          <FileText className="size-4" />
+          규제 보고서 생성
+        </button>
+      </div>
 
       <div>
         <h1 className="text-2xl font-bold tracking-tight">
@@ -84,7 +103,27 @@ export default function IngredientDetailPage({
         </CardContent>
       </Card>
 
-      <RegulationStatusMatrix regulations={ingredient.regulations} />
+      <div id="demo-reg-matrix">
+        <RegulationStatusMatrix regulations={ingredient.regulations} />
+      </div>
+
+      <div id="demo-ingredient-graph">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">국가별 규제 관계 그래프</CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <IngredientRegulationGraph ingredient={ingredient} />
+          </CardContent>
+        </Card>
+      </div>
+
+      <ReportGenerateDialog
+        open={reportDialogOpen}
+        onClose={() => setReportDialogOpen(false)}
+        ingredientId={ingredientId}
+        ingredientName={ingredient.nameKo}
+      />
     </div>
   );
 }

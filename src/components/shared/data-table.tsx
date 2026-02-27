@@ -30,6 +30,7 @@ interface DataTableProps<T> {
   searchKey?: string;
   pageSize?: number;
   onRowClick?: (row: T) => void;
+  getRowId?: (row: T, index: number) => string;
 }
 
 function getNestedValue(obj: unknown, key: string): unknown {
@@ -49,6 +50,7 @@ export function DataTable<T extends Record<string, unknown>>({
   searchKey,
   pageSize = 10,
   onRowClick,
+  getRowId,
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortKey, setSortKey] = useState<string | null>(null);
@@ -173,6 +175,7 @@ export function DataTable<T extends Record<string, unknown>>({
               paginatedData.map((row, rowIndex) => (
                 <TableRow
                   key={rowIndex}
+                  id={getRowId ? getRowId(row, rowIndex) : undefined}
                   className={cn(
                     onRowClick && "cursor-pointer"
                   )}

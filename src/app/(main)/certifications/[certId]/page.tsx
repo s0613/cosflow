@@ -15,7 +15,7 @@ const countryLabels: Record<Country, string> = {
   CN: "중국",
   JP: "일본",
   EU: "유럽연합",
-  VN: "베트남",
+  VN: "아세안",
 };
 
 const certStages: CertStatus[] = [

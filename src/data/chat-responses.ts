@@ -7,7 +7,7 @@ interface ChatResponse {
 
 export const chatResponses: Record<string, ChatResponse> = {
   히알루론산: {
-    text: "히알루론산나트륨(Sodium Hyaluronate)은 대표적인 보습 원료로, 조사한 5개국(한국, 중국, 일본, EU, 베트남) 모두에서 사용이 허용되어 있습니다. 별도의 농도 제한 없이 자유롭게 사용 가능하며, 고분자/저분자 다양한 분자량으로 활용됩니다. 수출 시 규제 이슈가 가장 적은 원료 중 하나입니다.",
+    text: "히알루론산나트륨(Sodium Hyaluronate)은 대표적인 보습 원료로, 조사한 5개국(한국, 중국, 일본, EU, 아세안) 모두에서 사용이 허용되어 있습니다. 별도의 농도 제한 없이 자유롭게 사용 가능하며, 고분자/저분자 다양한 분자량으로 활용됩니다. 수출 시 규제 이슈가 가장 적은 원료 중 하나입니다.",
     results: [
       { ingredientName: "히알루론산나트륨", inci: "SODIUM HYALURONATE", country: "KR", status: "허용", notes: "제한 없이 사용 가능" },
       { ingredientName: "히알루론산나트륨", inci: "SODIUM HYALURONATE", country: "CN", status: "허용", notes: "제한 없이 사용 가능" },
@@ -17,7 +17,7 @@ export const chatResponses: Record<string, ChatResponse> = {
     ],
   },
   레티놀: {
-    text: "레티놀(Retinol)은 주름 개선 대표 성분으로, 국가별 규제가 상이하여 주의가 필요합니다. 한국에서는 기능성 원료(2500IU/g), EU에서는 0.3%(얼굴)/0.05%(바디)로 제한되며, 2025년 EU 규제 강화가 예정되어 있습니다. 중국은 0.5% 이하 사용 가능하나 특수용도화장품 신고가 필요하며, 베트남은 조건부 허용으로 안전성 자료가 필요합니다.",
+    text: "레티놀(Retinol)은 주름 개선 대표 성분으로, 국가별 규제가 상이하여 주의가 필요합니다. 한국에서는 기능성 원료(2500IU/g), EU에서는 0.3%(얼굴)/0.05%(바디)로 제한되며, 2025년 EU 규제 강화가 예정되어 있습니다. 중국은 0.5% 이하 사용 가능하나 특수용도화장품 신고가 필요하며, 아세안은 조건부 허용으로 안전성 자료가 필요합니다.",
     results: [
       { ingredientName: "레티놀", inci: "RETINOL", country: "KR", status: "제한", maxConcentration: "기능성 원료 2500IU/g", notes: "KFDA 기능성화장품 심사 필요" },
       { ingredientName: "레티놀", inci: "RETINOL", country: "CN", status: "제한", maxConcentration: "0.5%", notes: "특수용도화장품 신고 필요" },
@@ -86,9 +86,59 @@ export const chatResponses: Record<string, ChatResponse> = {
       { ingredientName: "비피더스균용해물", inci: "BIFIDA FERMENT LYSATE", country: "CN", status: "조건부허용", notes: "신원료 등록 또는 기존 원료 확인 필요" },
     ],
   },
+  에탄올: {
+    text: "에탄올(Ethanol)은 화장품에서 용매, 방부 보조, 청량감 부여 등 다양한 목적으로 사용됩니다. 모든 조사 국가에서 허용되어 있으나, 어린이용 제품이나 구강 청결제에서는 농도 제한이 있을 수 있습니다. 변성 알코올(SD Alcohol)은 음용 방지를 위해 변성제를 첨가한 형태입니다.",
+    results: [
+      { ingredientName: "에탄올", inci: "ALCOHOL DENAT.", country: "KR", status: "허용", notes: "용매/방부 보조제로 광범위 사용" },
+      { ingredientName: "에탄올", inci: "ALCOHOL DENAT.", country: "CN", status: "허용", notes: "고농도 제품 라벨 주의 필요" },
+      { ingredientName: "에탄올", inci: "ALCOHOL DENAT.", country: "JP", status: "허용", notes: "제한 없이 사용 가능" },
+      { ingredientName: "에탄올", inci: "ALCOHOL DENAT.", country: "EU", status: "허용", notes: "변성제 종류에 따라 표기 규정 상이" },
+      { ingredientName: "에탄올", inci: "ALCOHOL DENAT.", country: "VN", status: "허용", notes: "제한 없이 사용 가능" },
+    ],
+  },
+  산화아연: {
+    text: "산화아연(Zinc Oxide)은 대표적인 무기 자외선차단제로, 모든 조사 국가에서 25% 이하로 사용이 허용됩니다. 피부 보호, 항균 효과도 있으며, 나노 입자 형태는 EU에서 별도 표기가 필요합니다. 산호초 보호 관련 이슈로 친환경 대안으로도 주목받고 있습니다.",
+    results: [
+      { ingredientName: "산화아연", inci: "ZINC OXIDE", country: "KR", status: "제한", maxConcentration: "25%", notes: "자외선차단제로 허용, 기능성화장품 심사" },
+      { ingredientName: "산화아연", inci: "ZINC OXIDE", country: "CN", status: "제한", maxConcentration: "25%", notes: "자외선차단 특수화장품 등록 필요" },
+      { ingredientName: "산화아연", inci: "ZINC OXIDE", country: "JP", status: "제한", maxConcentration: "25%", notes: "의약부외품 UV차단 유효성분" },
+      { ingredientName: "산화아연", inci: "ZINC OXIDE", country: "EU", status: "제한", maxConcentration: "25%", notes: "나노 형태는 nano 표기 의무" },
+      { ingredientName: "산화아연", inci: "ZINC OXIDE", country: "VN", status: "제한", maxConcentration: "25%", notes: "자외선차단 기능성 제품 허가 필요" },
+    ],
+  },
+  글리세린: {
+    text: "글리세린(Glycerin)은 가장 보편적인 보습제로, 모든 조사 국가에서 농도 제한 없이 자유롭게 사용할 수 있습니다. 식물성/합성 원료 모두 사용 가능하며, 비건/클린뷰티 트렌드에서도 선호되는 원료입니다. 고농도 사용 시 오히려 피부 수분을 뺏는 역효과가 있어 일반적으로 5~30%가 권장됩니다.",
+    results: [
+      { ingredientName: "글리세린", inci: "GLYCERIN", country: "KR", status: "허용", notes: "농도 제한 없음, 가장 안전한 보습제" },
+      { ingredientName: "글리세린", inci: "GLYCERIN", country: "CN", status: "허용", notes: "농도 제한 없음" },
+      { ingredientName: "글리세린", inci: "GLYCERIN", country: "JP", status: "허용", notes: "의약부외품 보습 성분으로 인정" },
+      { ingredientName: "글리세린", inci: "GLYCERIN", country: "EU", status: "허용", notes: "농도 제한 없음" },
+      { ingredientName: "글리세린", inci: "GLYCERIN", country: "VN", status: "허용", notes: "제한 없이 사용 가능" },
+    ],
+  },
+  티타늄디옥사이드: {
+    text: "티타늄디옥사이드(Titanium Dioxide)는 자외선차단 및 백색 안료로 사용됩니다. EU에서는 2022년부터 분무형 제품(스프레이, 파우더 등)에 대한 사용이 금지되었으며, 나노 입자는 별도 표기가 필요합니다. 흡입 위험성 논란이 있어 분산형 제품 개발 시 주의가 필요합니다.",
+    results: [
+      { ingredientName: "티타늄디옥사이드", inci: "TITANIUM DIOXIDE", country: "KR", status: "제한", maxConcentration: "25%", notes: "자외선차단제로 허용" },
+      { ingredientName: "티타늄디옥사이드", inci: "TITANIUM DIOXIDE", country: "CN", status: "제한", maxConcentration: "25%", notes: "자외선차단 특수화장품 등록" },
+      { ingredientName: "티타늄디옥사이드", inci: "TITANIUM DIOXIDE", country: "JP", status: "제한", maxConcentration: "25%", notes: "의약부외품 UV차단 유효성분" },
+      { ingredientName: "티타늄디옥사이드", inci: "TITANIUM DIOXIDE", country: "EU", status: "제한", maxConcentration: "25%", notes: "2022년부터 분무형 제품 사용 금지, 나노 표기 의무" },
+      { ingredientName: "티타늄디옥사이드", inci: "TITANIUM DIOXIDE", country: "VN", status: "제한", maxConcentration: "25%", notes: "자외선차단 허가 필요" },
+    ],
+  },
+  향료: {
+    text: "향료(Fragrance/Parfum)는 화장품에서 향을 부여하는 성분으로, EU에서는 알레르기 유발 향료 26종을 0.01%(린스오프) / 0.001%(리브온) 초과 사용 시 개별 성분명 표기가 의무화되어 있습니다. 천연향료와 합성향료 모두 사용 가능하며, 민감성 피부용 제품은 무향(Fragrance-Free)으로 개발을 권장합니다.",
+    results: [
+      { ingredientName: "향료", inci: "PARFUM", country: "KR", status: "허용", notes: "알레르기 유발 향료 표기 권장" },
+      { ingredientName: "향료", inci: "PARFUM", country: "CN", status: "허용", notes: "향료 성분 전성분 표기 준수" },
+      { ingredientName: "향료", inci: "PARFUM", country: "JP", status: "허용", notes: "알레르기 유발 향료 일부 표기 필요" },
+      { ingredientName: "향료", inci: "PARFUM", country: "EU", status: "제한", notes: "26종 알레르기 유발 향료 개별 표기 의무 (0.01%/0.001% 초과 시)" },
+      { ingredientName: "향료", inci: "PARFUM", country: "VN", status: "허용", notes: "전성분 표기 준수" },
+    ],
+  },
 };
 
 export const defaultResponse: ChatResponse = {
-  text: "해당 키워드에 대한 상세 규제 정보를 찾지 못했습니다. 구체적인 성분명(예: 히알루론산, 레티놀, 나이아신아마이드)이나 카테고리(예: 방부제, 자외선차단)로 검색해 주세요. COSFLOW 규제 데이터베이스에 등록된 50개 성분에 대한 5개국(한국/중국/일본/EU/베트남) 규제 현황을 확인할 수 있습니다.",
+  text: "해당 키워드에 대한 상세 규제 정보를 찾지 못했습니다. 구체적인 성분명(예: 히알루론산, 레티놀, 나이아신아마이드)이나 카테고리(예: 방부제, 자외선차단)로 검색해 주세요. COSFLOW 규제 데이터베이스에 등록된 50개 성분에 대한 5개국(한국/중국/일본/EU/아세안) 규제 현황을 확인할 수 있습니다.",
   results: [],
 };

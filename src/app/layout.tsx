@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { DemoProvider } from "@/context/demo-context";
+import { DemoOverlay } from "@/components/demo/demo-overlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +30,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         style={{ fontFamily: "var(--font-geist-sans), 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" }}
       >
-        {children}
+        <DemoProvider>
+          <DemoOverlay />
+          {children}
+        </DemoProvider>
       </body>
     </html>
   );

@@ -8,7 +8,7 @@ const countries: { code: Country; label: string }[] = [
   { code: "CN", label: "CN 중국" },
   { code: "JP", label: "JP 일본" },
   { code: "EU", label: "EU 유럽연합" },
-  { code: "VN", label: "VN 베트남" },
+  { code: "VN", label: "VN 아세안" },
 ];
 
 interface CountryFilterChipsProps {

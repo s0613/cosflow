@@ -106,6 +106,7 @@ export default function IngredientsPage() {
           const ingredient = row as unknown as Ingredient;
           router.push(`/ingredients/${ingredient.id}`);
         }}
+        getRowId={(_, index) => index === 0 ? "demo-ingredient-row-0" : `ingredient-row-${index}`}
       />
     </div>
   );

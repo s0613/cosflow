@@ -2,6 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { FileText } from "lucide-react";
+import Link from "next/link";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { DataTable, type ColumnDef } from "@/components/shared/data-table";
@@ -15,7 +17,7 @@ const countryLabels: Record<Country, string> = {
   CN: "중국",
   JP: "일본",
   EU: "유럽연합",
-  VN: "베트남",
+  VN: "아세안",
 };
 
 const countryTabs: { value: string; label: string }[] = [
@@ -24,7 +26,7 @@ const countryTabs: { value: string; label: string }[] = [
   { value: "CN", label: "중국" },
   { value: "JP", label: "일본" },
   { value: "EU", label: "EU" },
-  { value: "VN", label: "베트남" },
+  { value: "VN", label: "아세안" },
 ];
 
 const columns: ColumnDef<Record<string, unknown>>[] = [
@@ -94,10 +96,19 @@ export default function CertificationsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="인증 관리"
-        description="국가별 인증 현황을 관리합니다"
-      />
+      <div className="flex items-start justify-between">
+        <PageHeader
+          title="인증 관리"
+          description="국가별 인증 현황을 관리합니다"
+        />
+        <Link
+          href="/reports/certification"
+          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors flex-shrink-0"
+        >
+          <FileText className="size-4" />
+          보고서 생성
+        </Link>
+      </div>
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
           {countryTabs.map((tab) => (
