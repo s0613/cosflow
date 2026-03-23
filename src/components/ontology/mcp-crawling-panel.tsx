@@ -6,11 +6,11 @@
 // 출처: 업플로우 사업실적 보고서 — 식약처(KR), NMPA(CN), 후생노동성(JP), EU CPNP, 아세안 화장품 지침
 
 const MCP_SERVERS = [
-  { id: "KR", label: "식약처", desc: "식품의약품안전처", flag: "🇰🇷", color: "#3b82f6" },
-  { id: "CN", label: "NMPA", desc: "国家药监局", flag: "🇨🇳", color: "#ef4444" },
-  { id: "JP", label: "MHLW", desc: "후생노동성", flag: "🇯🇵", color: "#8b5cf6" },
-  { id: "EU", label: "CPNP", desc: "EU CPNP", flag: "🇪🇺", color: "#10b981" },
-  { id: "ASEAN", label: "ACD", desc: "아세안 화장품 지침", flag: "🌏", color: "#f59e0b" },
+  { id: "KR", label: "식약처", desc: "식품의약품안전처", flag: "🇰🇷", color: "#2c5282" },
+  { id: "CN", label: "NMPA", desc: "国家药监局", flag: "🇨🇳", color: "#285e61" },
+  { id: "JP", label: "MHLW", desc: "후생노동성", flag: "🇯🇵", color: "#4a5568" },
+  { id: "EU", label: "CPNP", desc: "EU CPNP", flag: "🇪🇺", color: "#1a5c5c" },
+  { id: "ASEAN", label: "ACD", desc: "아세안 화장품 지침", flag: "🌏", color: "#2b6cb0" },
 ];
 
 // Positions: pentagon centered at (150, 130), radius 88

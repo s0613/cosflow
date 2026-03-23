@@ -25,7 +25,7 @@ export const ontologyNodes: OntologyNode[] = [
       { key: "우선순위", value: "높음 | 중간 | 낮음" },
       { key: "진행률", value: "Number (0~100)" },
     ],
-    color: "#3b82f6",
+    color: "#1e3a5f",
   },
   {
     id: "request",
@@ -38,7 +38,7 @@ export const ontologyNodes: OntologyNode[] = [
       { key: "접수일", value: "Date" },
       { key: "상태", value: "검토중 | 승인 | 반려" },
     ],
-    color: "#8b5cf6",
+    color: "#2c5282",
   },
   {
     id: "ingredient",
@@ -51,7 +51,7 @@ export const ontologyNodes: OntologyNode[] = [
       { key: "CAS번호", value: "String" },
       { key: "카테고리", value: "String" },
     ],
-    color: "#10b981",
+    color: "#1a5c5c",
   },
   {
     id: "regulation",
@@ -63,7 +63,7 @@ export const ontologyNodes: OntologyNode[] = [
       { key: "비고", value: "String" },
       { key: "최종업데이트", value: "Date" },
     ],
-    color: "#f59e0b",
+    color: "#285e61",
   },
   {
     id: "country",
@@ -74,7 +74,7 @@ export const ontologyNodes: OntologyNode[] = [
       { key: "명칭", value: "String" },
       { key: "규제기관", value: "String" },
     ],
-    color: "#ef4444",
+    color: "#4a5568",
   },
   {
     id: "certification",
@@ -87,7 +87,7 @@ export const ontologyNodes: OntologyNode[] = [
       { key: "발급일", value: "Date" },
       { key: "만료일", value: "Date" },
     ],
-    color: "#06b6d4",
+    color: "#2b6c7e",
   },
   {
     id: "production",
@@ -99,7 +99,7 @@ export const ontologyNodes: OntologyNode[] = [
       { key: "단위", value: "String" },
       { key: "상태", value: "계획 | 원료입고 | 배합 | 충전 | 포장 | 검사 | 출하 | 완료" },
     ],
-    color: "#f97316",
+    color: "#2b6cb0",
   },
   {
     id: "quality",
@@ -112,7 +112,7 @@ export const ontologyNodes: OntologyNode[] = [
       { key: "합격여부", value: "Boolean" },
       { key: "검사자", value: "String" },
     ],
-    color: "#84cc16",
+    color: "#3182a8",
   },
   {
     id: "user",
@@ -124,7 +124,7 @@ export const ontologyNodes: OntologyNode[] = [
       { key: "부서", value: "String" },
       { key: "역할", value: "대표이사 | 연구원 | QC | 영업" },
     ],
-    color: "#6366f1",
+    color: "#2d3748",
   },
 ];
 

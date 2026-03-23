@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-header";
 import { SearchBar } from "@/components/regulations/search-bar";
@@ -10,50 +10,11 @@ import { SearchResults } from "@/components/regulations/search-results";
 import { FileUploadZone } from "@/components/regulations/file-upload-zone";
 import { ExcelPreviewModal } from "@/components/regulations/excel-preview-modal";
 import { useSearch } from "@/hooks/use-search";
-import { useDemoContext } from "@/context/demo-context";
 
 export default function RegulationsPage() {
-  const demo = useDemoContext();
   const { query, setQuery, state, summary, results, allResults, countryFilters, toggleCountryFilter, search, reset } =
     useSearch();
   const [excelModalOpen, setExcelModalOpen] = useState(false);
-
-  const searchRef = useRef(search);
-  const toggleRef = useRef(toggleCountryFilter);
-  const queryRef = useRef(query);
-  useEffect(() => { searchRef.current = search; }, [search]);
-  useEffect(() => { toggleRef.current = toggleCountryFilter; }, [toggleCountryFilter]);
-  useEffect(() => { queryRef.current = query; }, [query]);
-
-  // Sync typewriter text → search input during demo (search or all scenario)
-  useEffect(() => {
-    if (demo.isPlaying && demo.typewriterText) {
-      setQuery(demo.typewriterText);
-    }
-  }, [demo.typewriterText, demo.isPlaying, setQuery]);
-
-  // Demo event handlers
-  useEffect(() => {
-    const handlers: Record<string, () => void> = {
-      "demo:search": () => searchRef.current(queryRef.current),
-      "demo:filter:KR": () => toggleRef.current("KR"),
-      "demo:filter:EU": () => toggleRef.current("EU"),
-      "demo:show-excel-modal": () => setExcelModalOpen(true),
-      "demo:hide-excel-modal": () => setExcelModalOpen(false),
-      "demo:simulate-file": () =>
-        window.dispatchEvent(
-          new CustomEvent("demo-simulate-file", {
-            detail: { name: "성분분석서_2026Q1.xlsx" },
-          })
-        ),
-      "demo:trigger-analyze": () =>
-        window.dispatchEvent(new CustomEvent("demo-trigger-analyze")),
-    };
-
-    const entries = Object.entries(handlers);
-    entries.forEach(([event, fn]) => window.addEventListener(event, fn));
-    return () => entries.forEach(([event, fn]) => window.removeEventListener(event, fn));
-  }, []);
 
   return (
     <div className="space-y-6">

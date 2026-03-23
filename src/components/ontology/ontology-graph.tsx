@@ -16,8 +16,32 @@ import {
   Position,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import {
+  FolderKanban,
+  FileText,
+  FlaskConical,
+  ShieldCheck,
+  Globe,
+  BadgeCheck,
+  Factory,
+  ClipboardCheck,
+  UserCircle,
+  type LucideIcon,
+} from "lucide-react";
 import { ontologyNodes, ontologyEdges, OntologyEdge } from "@/data/ontology";
 import { NodeDetailPanel } from "./node-detail-panel";
+
+const NODE_ICONS: Record<string, LucideIcon> = {
+  project: FolderKanban,
+  request: FileText,
+  ingredient: FlaskConical,
+  regulation: ShieldCheck,
+  country: Globe,
+  certification: BadgeCheck,
+  production: Factory,
+  quality: ClipboardCheck,
+  user: UserCircle,
+};
 
 // ── PDF 기반 4-Layer Architecture ────────────────────────────────────────────
 // L4  Applications Layer       : 산업별 맞춤형 웹 인터페이스, 워크플로우 자동화
@@ -30,28 +54,28 @@ const LAYERS = [
     key: "L1",
     label: "Data Integration",
     sub: "외부 API · 규제 DB",
-    color: "#94a3b8",
+    color: "#718096",
     y: 480,
   },
   {
     key: "L2",
     label: "Business Ontology",
     sub: "Objects · Relationships · Actions",
-    color: "#10b981",
+    color: "#285e61",
     y: 330,
   },
   {
     key: "L3",
     label: "AI Agent Actions",
     sub: "RAG · 자동화 · 의사결정",
-    color: "#3b82f6",
+    color: "#2c5282",
     y: 180,
   },
   {
     key: "L4",
     label: "Applications",
     sub: "웹 인터페이스 · 워크플로우",
-    color: "#8b5cf6",
+    color: "#1e3a5f",
     y: 40,
   },
 ] as const;
@@ -69,46 +93,48 @@ const nodeLayer: Record<string, string> = {
 };
 
 const nodePositions: Record<string, { x: number; y: number }> = {
-  // L1 — Data Integration
-  country:       { x: 280, y: 480 },
-  // L2 — Business Ontology
-  ingredient:    { x:  60, y: 330 },
-  regulation:    { x: 290, y: 330 },
-  certification: { x: 530, y: 330 },
-  // L3 — AI Agent Actions
-  request:       { x:  60, y: 180 },
-  production:    { x: 290, y: 180 },
-  quality:       { x: 530, y: 180 },
-  // L4 — Applications
-  project:       { x: 160, y:  40 },
-  user:          { x: 440, y:  40 },
+  // L1 — Data Integration (중앙 정렬)
+  country:       { x: 260, y: 480 },
+  // L2 — Business Ontology (균등 3열)
+  ingredient:    { x:  60, y: 320 },
+  regulation:    { x: 260, y: 320 },
+  certification: { x: 460, y: 320 },
+  // L3 — AI Agent Actions (균등 3열)
+  request:       { x:  60, y: 170 },
+  production:    { x: 260, y: 170 },
+  quality:       { x: 460, y: 170 },
+  // L4 — Applications (중앙 대칭)
+  project:       { x: 150, y:  40 },
+  user:          { x: 370, y:  40 },
 };
 
 // ── Node component ──────────────────────────────────────────────────────────
 function OntologyNodeComponent({ id, data }: NodeProps) {
   const d = data as { label: string; color: string; selected: boolean };
+  const Icon = NODE_ICONS[id] ?? Globe;
   return (
     <div
       id={`demo-node-${id}`}
-      className="px-4 py-3 rounded-xl border-2 shadow-md transition-all duration-300 min-w-[110px] text-center"
+      className="flex items-center justify-center rounded-full border-2 transition-all duration-200"
       style={{
-        borderColor: d.color,
-        backgroundColor: d.selected ? d.color : "white",
-        color: d.selected ? "white" : "#1f2937",
+        width: 52,
+        height: 52,
+        borderColor: d.selected ? d.color : `${d.color}60`,
+        backgroundColor: d.selected ? d.color : "#f8fafc",
         boxShadow: d.selected
-          ? `0 0 0 4px ${d.color}40, 0 4px 12px ${d.color}30`
-          : undefined,
+          ? `0 0 0 4px ${d.color}20, 0 4px 12px ${d.color}25`
+          : `0 2px 6px rgba(0,0,0,0.08)`,
       }}
     >
-      <Handle type="target" position={Position.Left}   style={{ background: d.color }} />
-      <Handle type="target" position={Position.Top}    style={{ background: d.color }} />
-      <Handle type="source" position={Position.Right}  style={{ background: d.color }} />
-      <Handle type="source" position={Position.Bottom} style={{ background: d.color }} />
-      <div
-        className="size-2.5 rounded-full mx-auto mb-1.5"
-        style={{ backgroundColor: d.selected ? "white" : d.color }}
+      <Handle type="target" position={Position.Left}   style={{ background: d.color, width: 6, height: 6 }} />
+      <Handle type="target" position={Position.Top}    style={{ background: d.color, width: 6, height: 6 }} />
+      <Handle type="source" position={Position.Right}  style={{ background: d.color, width: 6, height: 6 }} />
+      <Handle type="source" position={Position.Bottom} style={{ background: d.color, width: 6, height: 6 }} />
+      <Icon
+        size={22}
+        strokeWidth={1.8}
+        style={{ color: d.selected ? "white" : d.color }}
       />
-      <div className="text-sm font-semibold">{d.label}</div>
     </div>
   );
 }
@@ -131,33 +157,33 @@ function toFlowEdges(edgeDefs: OntologyEdge[]): Edge[] {
     target: e.target,
     label: e.label,
     animated: false,
-    markerEnd: { type: MarkerType.ArrowClosed },
-    style: { stroke: "#94a3b8" },
-    labelStyle: { fontSize: 10, fill: "#64748b" },
-    labelBgStyle: { fill: "white", fillOpacity: 0.85 },
+    markerEnd: { type: MarkerType.ArrowClosed, color: "#94a3b8" },
+    style: { stroke: "#a0aec0", strokeWidth: 1 },
+    labelStyle: { fontSize: 10, fill: "#4a5568", fontWeight: 500 },
+    labelBgStyle: { fill: "#f7fafc", fillOpacity: 0.92 },
   }));
 }
 
 // ── Layer legend ─────────────────────────────────────────────────────────────
 function LayerLegend() {
   return (
-    <div className="bg-white/92 backdrop-blur-sm border border-border rounded-xl shadow-sm p-3 min-w-[200px]">
-      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-2.5">
+    <div className="bg-white/95 backdrop-blur-sm border border-slate-200 rounded-lg shadow-sm p-3 min-w-[200px]">
+      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2.5">
         4-Layer Architecture
       </p>
       {[...LAYERS].reverse().map((layer) => (
         <div key={layer.key} className="flex items-start gap-2 mb-2">
           <div className="flex flex-col items-center gap-0.5 flex-shrink-0 mt-0.5">
-            <div className="size-2.5 rounded-full" style={{ backgroundColor: layer.color }} />
-            <span className="text-[9px] font-bold" style={{ color: layer.color }}>{layer.key}</span>
+            <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: layer.color }} />
+            <span className="text-[9px] font-semibold text-slate-400">{layer.key}</span>
           </div>
           <div>
             <div className="text-xs font-semibold text-slate-700">{layer.label}</div>
-            <div className="text-[10px] text-muted-foreground leading-snug">{layer.sub}</div>
+            <div className="text-[10px] text-slate-400 leading-snug">{layer.sub}</div>
           </div>
         </div>
       ))}
-      <div className="border-t border-border pt-2 mt-1 text-[10px] text-muted-foreground">
+      <div className="border-t border-slate-200 pt-2 mt-1 text-[10px] text-slate-400">
         9 엔티티 · 9 관계
       </div>
     </div>
@@ -217,9 +243,9 @@ export function OntologyGraph() {
           nodeTypes={nodeTypes}
           fitView
           fitViewOptions={{ padding: 0.22 }}
-          className="bg-muted/30"
+          className="bg-slate-50/80"
         >
-          <Background gap={20} size={1} color="#e2e8f0" />
+          <Background gap={24} size={0.8} color="#cbd5e0" />
           <Controls />
           <Panel position="top-left">
             <LayerLegend />
